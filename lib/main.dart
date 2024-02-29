@@ -1,3 +1,4 @@
+import 'package:ex4_gridview/car_list.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -23,25 +24,35 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-          child: GridView.count(
-            shrinkWrap: true,
-              //gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              //),
-              
-              children: List.generate(20, (index) {
+        appBar: AppBar(title: const Text('LADA')),
+        body: Center(child: LayoutBuilder(builder: (context, constraints) {
+          return GridView.builder(
+              itemCount: carList.length,
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: constraints.maxWidth > 700 ? 4 : 1,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20,
+                childAspectRatio: 5,
+              ),
+              itemBuilder: (BuildContext context, int index) {
                 return Center(
                   child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20), 
-                          color: Colors.black12,
-                          
-                          )),
+                    
+                    decoration: BoxDecoration(
+                      
+                      borderRadius: BorderRadius.circular(30),
+                      color: Colors.black12,
+                    ),
+                    child: Column(
+                      children: [
+                        Expanded(child: Image.network(carList[index].getImg())),
+                        
+                      ],
+                    ),
+                  ),
                 );
-              }))),
-    );
+              });
+        })));
   }
 }
